@@ -4,7 +4,7 @@
             <div class="income">
                 <h2 class="icome__title">Income</h2>
 
-                <v-card  v-for="(income) in getItemsByType('inc')" :key="income._id" class="item__card" hover>
+                <v-card  v-for="income in getItemsByType('inc')" :key="income._id" class="item__card" hover>
                     <div class="item clearfix">
                         <v-flex left>{{income._description}}</v-flex>
                         <v-flex right>
@@ -27,7 +27,7 @@
             <div class="expenses">
                 <h2 class="expenses__title">Expenses</h2>
 
-                <v-card v-for="(expense) in getItemsByType('exp')" :key="expense._id" class="item__card" hover>   
+                <v-card v-for="expense in getItemsByType('exp')" :key="expense._id" class="item__card" hover>   
                     <div class="item clearfix" id="expense-0">
                         <v-flex left>{{expense._description}}</v-flex>
                         <v-flex right>
@@ -65,11 +65,12 @@
         {
             dataItems()
             {
-                // calculate percentages 
-                if (this.totals.inc > 0) 
+                // calculate percentages
+                let inc = this.totals['inc']
+                if (inc > 0) 
                 {
                     this.dataItems.forEach(cur => {
-                        if(cur._type === 'exp') cur._percentage = Math.round((cur._value / this.totals.inc) * 100);
+                        if(cur._type === 'exp') cur._percentage = Math.round((cur._value / inc) * 100);
                     })
                 } 
                 else 
@@ -88,7 +89,7 @@
                     //delete an item row into data.json
                     await DataItemsService.removeItem(id);
                     //update dataItem properity to update ui
-                    this.$store.commit('data',await DataItemsService.getDataItems())
+                    this.$store.commit('dataItems',await DataItemsService.getDataItems())
                 } catch(e) {
                     // statements
                     console.log(e);

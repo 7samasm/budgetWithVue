@@ -41,25 +41,17 @@
     export default
     {
         mixins : [budgetMixin],
-        data()
-        {
-            return {
-                budget : 0,
-                percentage : -1
-            }
-        },
         watch  :
         {
             dataItems()
             {
-                console.dir(this)
-                // Calculate the budget: income - expenses
-                this.budget = this.totals.inc - this.totals.exp;
+                let per;
                 // calculate the percentage of income that we spent
                 if (this.totals.inc > 0) {
-                    this.percentage = Math.round((this.totals.exp / this.totals.inc) * 100);
+                    per = Math.round((this.totals.exp / this.totals.inc) * 100);
+                    this.$store.commit('percentage',per)
                 } else {
-                    this.percentage = -1;
+                    this.$store.commit('percentage',-1)
                 }
             }
         },
@@ -68,7 +60,6 @@
             displayDate()
             {
                 let now, months, month, year;
-                
                 now = new Date();
                 months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
                 month = now.getMonth();

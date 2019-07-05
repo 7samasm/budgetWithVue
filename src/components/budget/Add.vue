@@ -28,6 +28,7 @@
 
     import DataItemsModel from './DataItemsModel'
     import DataItemsService from '../../DataItemsService'
+    import {mapActions,mapGetters} from 'vuex/helpers'
 
     export default {
     	
@@ -37,12 +38,19 @@
                 type : "",
                 description : "",
                 value: "",
-                color : "teal",
-                addBoardClass : "add"
             }
+        },
+        computed : {
+            ...mapGetters({
+                addBoardClass : 'addBoardClass',
+                color : 'color'
+            })
         },      
         methods : 
         {
+            // ...mapActions({
+            //     addItem: 'addItem'
+            // }),
             async addItem()
             {
                 let intVal = parseInt(this.value)
@@ -54,12 +62,11 @@
                     newItem._type        = this.type;
                     newItem._description = this.description;
                     newItem._value       = intVal;
-
                     try {
                         //insert an item row into data.json
                         await DataItemsService.insertItem(newItem);
                         //update data of store to update ui
-                        this.$store.commit('data',await DataItemsService.getDataItems())
+                        this.$store.commit('dataItems',await DataItemsService.getDataItems())
                     } catch(e) {
                         console.log(e);
                     }
@@ -77,11 +84,14 @@
                     this.$refs.selectRef,
                 ]
                 if (fields[0].value === 'exp') {
-                    this.addBoardClass = "red-add"
-                    this.color = "red"
+                    // this.addBoardClass = "red-add"
+                    // this.color = "red"
+                    this.$store.dispatch('setAddBoardClass','red-add')
+                    this.$store.dispatch('setColor','red')
+
                 } else {
-                    this.addBoardClass = "add"
-                    this.color = "teal"
+                    this.$store.dispatch('setAddBoardClass','add')
+                    this.$store.dispatch('setColor','teal')
                 }
             }
         },

@@ -1,25 +1,27 @@
 import DataItemsService from '../../DataItemsService'
+import {mapGetters,mapActions} from 'vuex/helpers'
+
 
 export const budgetMixin = {
-    data()
-    {
+    data(){
         return {
-            totals : {
-                inc : 0,
-                exp : 0
-            }
+            incomes : 0
         }
     },
     computed :
     {
-        dataItems(){
-           return this.$store.state.data
-        }
+        ...mapGetters({
+            dataItems  : 'dataItems',
+            totals     : 'totals',
+            budget     : 'budget',
+            percentage : 'percentage'
+        })
     },
     watch : 
     {
         dataItems()
         {
+            console.log(this.getItemsByType('inc'))
             console.log('watch called from mixin')
             // calculate totals incs & exps
             this.calculateTotal('inc')
@@ -28,20 +30,27 @@ export const budgetMixin = {
     },
 	methods : 
 	{
-        calculateTotal(type)
-        {
-            let sum = 0 , total;
-            total =  this.getItemsByType(type);
-            total.forEach(cur => {
-                sum += cur._value
-            });
-            this.totals[type] = sum;
-        },
+        ...mapActions({
+            calculateTotal: 'calculateTotal'
+        }),
         getItemsByType(type)
         {
-            let arr = []
-            arr = this.dataItems.filter(dataItems => dataItems._type === type)
-            return arr;
+            // let arr = []
+            // try {
+            //     DataItemsService.getByType(type).then((data)=>{
+            //         for(let d of data){
+            //             arr.push(d)
+            //         }
+            //     })
+            //     return arr;
+            // } catch(e) {
+            //     console.log(e);
+            // }
+            // return arr;
+            return this.dataItems.filter(dataItems => dataItems._type === type)
         }
-	}
+	},
+    async created(){
+        this.incomes = await DataItemsService.getByType('inc')
+    }
 }

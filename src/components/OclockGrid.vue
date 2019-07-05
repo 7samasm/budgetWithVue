@@ -3,7 +3,7 @@
     	<v-flex xs12>
     		<v-text-field color="teal" label="user"></v-text-field>
     	</v-flex>
-        <app-oclock v-for="(x,index) in 24" :key="index"></app-oclock>
+        <app-oclock v-for="(x,index) in 4" :key="index"></app-oclock>
     </v-layout>
 </template>
 

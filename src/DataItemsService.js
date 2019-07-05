@@ -24,4 +24,16 @@ export default class DataItemsService {
 	static removeItem(id){
 		return axios.delete(`${url}dataItem/${id}`);
 	}
+
+	static getByType(type){
+		return new Promise(async (resolve,reject) => {
+			try {
+				const res = await axios.get(`${url}dataItems/${type}`)
+				const data = res.data;
+				resolve(data)
+			} catch(e) {
+				reject(e.message)
+			}
+		})
+	}
 }

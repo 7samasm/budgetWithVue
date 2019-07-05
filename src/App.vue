@@ -29,14 +29,13 @@ export default {
 
     let dataItems = []
     
-    try {
-      dataItems = await DataItemsService.getDataItems()
-    } catch(e) {
+    try {dataItems = await DataItemsService.getDataItems()}
+    catch(e) {
       console.log(e);
+    } 
+
+    this.$store.commit('dataItems',dataItems)
     }
-    this.$store.commit('data',dataItems)
-    console.log(this.$store.state.data)
-  }
 }
 </script>
 

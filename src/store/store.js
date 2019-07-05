@@ -1,26 +1,32 @@
-import 	Vue from 'vue'
+import 	Vue  from 'vue'
 import  Vuex from 'vuex'
+import  data from './modules/data'
+import  add from './modules/add'
 
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
-    state :
-    {
-        data : [],
-        drawer : false
-    },
-    getters :
-    {
-    	data  : state => state.data,
-    	drawer: state => state.drawer
-    },
-    mutations :
-    {
-    	data(state,val) {
-    		state.data = val
-    	},
-    	drawer(state,boolValue) {
-    		state.drawer = boolValue
-    	}
+    modules: {
+        data,
+        add
     }
 })
+
+
+// import Vue from 'vue';
+// import Vuex from 'vuex';
+
+// import stocks from './modules/stocks';
+// import portfolio from './modules/portfolio';
+
+// import * as actions from './actions';
+
+// Vue.use(Vuex);
+
+// export default new Vuex.Store({
+//     actions,
+//     modules: {
+//         stocks,
+//         portfolio
+//     }
+// });
