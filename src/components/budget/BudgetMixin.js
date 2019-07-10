@@ -1,13 +1,8 @@
 import DataItemsService from '../../DataItemsService'
-import {mapGetters,mapActions} from 'vuex/helpers'
+import {mapGetters,mapActions} from 'vuex'
 
 
 export const budgetMixin = {
-    data(){
-        return {
-            incomes : 0
-        }
-    },
     computed :
     {
         ...mapGetters({
@@ -35,22 +30,7 @@ export const budgetMixin = {
         }),
         getItemsByType(type)
         {
-            // let arr = []
-            // try {
-            //     DataItemsService.getByType(type).then((data)=>{
-            //         for(let d of data){
-            //             arr.push(d)
-            //         }
-            //     })
-            //     return arr;
-            // } catch(e) {
-            //     console.log(e);
-            // }
-            // return arr;
             return this.dataItems.filter(dataItems => dataItems._type === type)
         }
-	},
-    async created(){
-        this.incomes = await DataItemsService.getByType('inc')
-    }
+	}
 }

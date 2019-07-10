@@ -2,7 +2,7 @@
     <nav>
         <v-toolbar>
             <v-toolbar-side-icon @click = "openDrawer"></v-toolbar-side-icon>
-            <v-toolbar-title>{{title}}</v-toolbar-title>
+            <v-toolbar-title>{{this.$route.name}}</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-toolbar-items class="hidden-sm-and-down">
 
@@ -25,11 +25,6 @@
     import drawer  from './Drawer.vue';
 
     export default {
-        data() {
-            return {
-                title : "Home"
-            }
-        },
         components: {
             drawer,
         },

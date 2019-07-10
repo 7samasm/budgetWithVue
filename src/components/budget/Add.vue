@@ -1,18 +1,20 @@
 <template>
 
-    <v-card :class="addBoardClass" flat>
+    <v-card :class="addBoardClass" raised>
         <v-layout row wrap>
             <v-flex sm2 xs12>
-                <select class="add__type_mod " v-model="type" @change="changedType" ref="selectRef">
-                    <option class="text-center" value="inc" selected>+</option>
-                    <option value="exp">-</option>
-                </select>
+                <v-combobox
+                    :color="color"
+                    @change="changedType"
+                    v-model="select"
+                    value="m"
+                    :items="items"></v-combobox>
             </v-flex>
             <v-flex sm6 xs12>
                 <v-text-field :color="color" label="description" prependInnerIcon="message" v-model="description" ref="descriptionRef"></v-text-field>
             </v-flex>
             <v-flex sm2 xs12>
-                <v-text-field :color="color" label="value" type="number" prependInnerIcon="edit" v-model="value"></v-text-field>
+                <v-text-field :color="color" label="value" type="number" prependInnerIcon="folder" v-model="value"></v-text-field>
             </v-flex>
             <v-flex sm2 xs12>
                 <v-btn fab depressed flat @click="addItem">
@@ -28,7 +30,7 @@
 
     import DataItemsModel from './DataItemsModel'
     import DataItemsService from '../../DataItemsService'
-    import {mapActions,mapGetters} from 'vuex/helpers'
+    import {mapActions,mapGetters} from 'vuex'
 
     export default {
     	
@@ -38,6 +40,8 @@
                 type : "",
                 description : "",
                 value: "",
+                select : '',
+                items : ['+','-']
             }
         },
         computed : {
@@ -77,19 +81,15 @@
                     this.$refs.descriptionRef.focus();
                 }
             },
-            changedType()
-            {
-                let fields = 
-                [
-                    this.$refs.selectRef,
-                ]
-                if (fields[0].value === 'exp') {
-                    // this.addBoardClass = "red-add"
-                    // this.color = "red"
+            changedType(){
+                if (this.select === '-') {
+
+                    this.type = 'exp'
                     this.$store.dispatch('setAddBoardClass','red-add')
                     this.$store.dispatch('setColor','red')
 
                 } else {
+                    this.type = 'inc'
                     this.$store.dispatch('setAddBoardClass','add')
                     this.$store.dispatch('setColor','teal')
                 }
@@ -118,26 +118,6 @@
     padding: 20px;
     transition: border 0.3s;
     transition: background 0.3s
-}
-.add__type_mod {
-    width:50%;
-    float: right;
-    border: 1px solid #e7e7e7;
-    height: 44px;
-    font-size: 18px;
-    text-align: center !important;
-    color: inherit;
-    font-weight: 300;
-    -webkit-transition: border 0.3s;
-    transition: border 0.3s;
-    margin-top: 6px;
-    border: none;
-    border-bottom: 1px solid;
-    -webkit-appearance: menulist-button
-}
-
-.add__type_mod:focus {
-    outline: none;
 }
 
 </style>

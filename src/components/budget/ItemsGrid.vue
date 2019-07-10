@@ -4,20 +4,22 @@
             <div class="income">
                 <h2 class="icome__title">Income</h2>
 
-                <v-card  v-for="income in getItemsByType('inc')" :key="income._id" class="item__card" hover>
-                    <div class="item clearfix">
+                <v-card  v-for="income in getItemsByType('inc')" :key="income._id" class="item__card item" hover>
+                    <v-layout row wrap>
                         <v-flex left>{{income._description}}</v-flex>
                         <v-flex right>
-                            <div class="item__value">{{income._value}}</div>
-                            <div class="item__delete">
-                                <button 
-                                    class="item__delete--btn"
-                                    @click="deleteItem(income._id)">
-                                    <v-icon color="#28B9B5">delete</v-icon>
-                                </button>
+                            <div class="right">
+                                <div class="item__value">{{income._value}}</div>
+                                <div class="item__delete">
+                                    <button 
+                                        class="item__delete--btn"
+                                        @click="deleteItem(income._id)">
+                                        <v-icon color="#28B9B5">delete</v-icon>
+                                    </button>
+                                </div>
                             </div>
                         </v-flex>
-                    </div>
+                    </v-layout>
                 </v-card >
                              
             </div>
@@ -27,25 +29,27 @@
             <div class="expenses">
                 <h2 class="expenses__title">Expenses</h2>
 
-                <v-card v-for="expense in getItemsByType('exp')" :key="expense._id" class="item__card" hover>   
-                    <div class="item clearfix" id="expense-0">
+                <v-card v-for="expense in getItemsByType('exp')" :key="expense._id" class="item__card item" hover>   
+                    <v-layout row wrap>
                         <v-flex left>{{expense._description}}</v-flex>
                         <v-flex right>
-                            <div class="item__value">- {{expense._value}}</div>
-                            <div 
-                            class="item__percentage" 
-                            v-if="expense._percentage > 0">{{expense._percentage}}%</div>
-                            <div 
-                            class="item__percentage" 
-                            v-else>---</div>
-                            <div class="item__delete">
-                                <button 
-                                    class="item__delete--btn">
-                                    <v-icon color="#FF5049" @click="deleteItem(expense._id)">delete</v-icon>
-                                </button>
+                            <div class="right">
+                                <div class="item__value">- {{expense._value}}</div>
+                                <div 
+                                class="item__percentage" 
+                                v-if="expense._percentage > 0">{{expense._percentage}}%</div>
+                                <div 
+                                class="item__percentage" 
+                                v-else>---</div>
+                                <div class="item__delete">
+                                    <button 
+                                        class="item__delete--btn">
+                                        <v-icon color="#FF5049" @click="deleteItem(expense._id)">delete</v-icon>
+                                    </button>
+                                </div>
                             </div>
                         </v-flex>
-                    </div>
+                    </v-layout>
                 </v-card>
 
             </div>
@@ -100,11 +104,7 @@
 </script>
 
 <style scoped>
-.clearfix::after {
-    content: "";
-    display: table;
-    clear: both;
-}
+
 .income , .expenses {
     padding: 15px
 }
@@ -119,13 +119,9 @@ h2 {
 .expenses__title { color: #FF5049; }
 
 .item {
-    padding: 9px;
+    padding: 11px;
 }
-.item:nth-child(even) { background-color: #f7f7f7; }
-
-/*.item__description {
-    float: left;
-}*/
+/*.item:nth-child(even) { background-color: #f7f7f7; }*/
 
 .item__value {
     float: left;
@@ -134,13 +130,12 @@ h2 {
 
 .item__percentage {
     float: left;
-    margin-left: 20px;
+    margin-left: 15px;
     transition: transform 0.3s;
     font-size: 11px;
     background-color: #FFDAD9;
     padding: 2px;
-    border-radius: 3px;
-    width: 32px;
+    width: 35px;
     text-align: center;
 }
 
@@ -187,5 +182,5 @@ h2 {
 }
 
 .unpaid .item__percentage { box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.1); }
-/*.unpaid:hover .item__description { font-weight: 900; }*/
+.unpaid:hover .item__description { font-weight: 900; }
 </style>

@@ -32,7 +32,7 @@
             </v-flex>
 
         </v-layout>
-        <pre>{{dataItems}}</pre>
+        <!-- <pre>{{dataItems}}</pre> -->
     </div>
 </template>
 
