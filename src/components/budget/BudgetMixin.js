@@ -1,7 +1,9 @@
 import DataItemsService from '../../DataItemsService'
 import {mapGetters,mapActions} from 'vuex'
 
-
+/*
+cd ~/budgetApi
+*/
 export const budgetMixin = {
     computed :
     {
@@ -20,7 +22,7 @@ export const budgetMixin = {
             console.log('watch called from mixin')
             // calculate totals incs & exps
             this.calculateTotal('inc')
-            this.calculateTotal('exp')                         
+            this.calculateTotal('exp')        
         }
     },
 	methods : 
@@ -34,3 +36,4 @@ export const budgetMixin = {
         }
 	}
 }
+
